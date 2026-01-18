@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Dream Helper (Autodori) | BanG Dream!（Garupa）Windows 自动化助手</title>
+  <meta name="description" content="Dream Helper（Autodori）是一款 Windows 自动化助手，通过 ADB + MaaFramework 控制 Android 模拟器，使用 OCR 与模板匹配辅助选曲与运行 Live。" />
+
+  <meta property="og:title" content="Dream Helper (Autodori)" />
+  <meta property="og:description" content="Windows 自动化助手：ADB + MaaFramework + OCR。" />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230ea5e9'/><path d='M22 42V22h20v20H22zm4-4h12V26H26v12z' fill='white'/></svg>" />
+  <link rel="stylesheet" href="../assets/site.css" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-dvh bg-white text-slate-900 antialiased">
+  <a class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-20 focus:rounded-lg focus:bg-slate-900 focus:px-3 focus:py-2 focus:text-white" href="#main">
+    跳到正文
+  </a>
+
+  <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70" style="padding-top: env(safe-area-inset-top);">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+      <div class="flex items-center gap-3">
+        <div class="flex size-9 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm" aria-hidden="true">
+          <span class="font-semibold">DH</span>
+        </div>
+        <div class="leading-tight">
+          <div class="text-sm font-semibold">Dream Helper <span class="text-slate-500">(Autodori)</span></div>
+          <div class="text-xs text-slate-500">BanG Dream!（Garupa）Windows 自动化助手</div>
+        </div>
+      </div>
+
+      <nav class="flex items-center gap-3" aria-label="Primary">
+        <a class="text-sm text-slate-700 hover:text-slate-900" href="#features">功能</a>
+        <a class="text-sm text-slate-700 hover:text-slate-900" href="#requirements">环境</a>
+        <a class="text-sm text-slate-700 hover:text-slate-900" href="#faq">FAQ</a>
+        <div class="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-50 p-1 sm:flex" aria-label="Language">
+          <a class="rounded-full px-2 py-1 text-xs font-medium text-slate-600 hover:text-slate-900" href="../">日本語</a>
+          <a class="rounded-full px-2 py-1 text-xs font-medium text-slate-600 hover:text-slate-900" href="../en/">EN</a>
+          <span class="rounded-full bg-white px-2 py-1 text-xs font-medium text-slate-900 shadow-sm">中文</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="mx-auto max-w-6xl px-4 pb-16 pt-10 sm:px-6">
+    <section class="grid gap-8 lg:grid-cols-12 lg:items-start">
+      <div class="lg:col-span-7">
+        <p class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-700">
+          <span class="font-medium">Windows</span>
+          <span aria-hidden="true">•</span>
+          <span>ADB + MaaFramework</span>
+          <span aria-hidden="true">•</span>
+          <span>OCR + 模板匹配</span>
+        </p>
+
+        <h1 class="mt-4 text-balance text-3xl font-semibold leading-tight sm:text-4xl">
+          在模拟器上辅助 Garupa 操作的自动化工具
+        </h1>
+
+        <p class="mt-4 max-w-2xl text-pretty text-base text-slate-700 sm:text-lg">
+          <strong>Dream Helper（Autodori）</strong>通过 ADB 控制 Android 模拟器，
+          结合 OCR 与模板匹配识别界面状态，并生成触控输入来辅助选曲与运行 Live。
+        </p>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a class="inline-flex items-center justify-center rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" href="#get">
+            获取
+          </a>
+          <a class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" href="#disclaimer">
+            免责声明
+          </a>
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+          <p class="text-sm text-slate-700">
+            <span class="font-semibold">重要：</span>
+            本项目为<strong>非官方</strong>工具，与权利方/运营方无关。使用风险自负。
+          </p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h2 class="text-balance text-lg font-semibold">概览</h2>
+          <ul class="mt-4 space-y-3 text-sm text-slate-700">
+            <li class="flex gap-3"><span class="mt-0.5 size-2 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>自动连接模拟器并运行流程</li>
+            <li class="flex gap-3"><span class="mt-0.5 size-2 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>OCR 识别 + 歌曲目录辅助选曲</li>
+            <li class="flex gap-3"><span class="mt-0.5 size-2 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>生成触控指令进行自动演奏（依赖环境）</li>
+            <li class="flex gap-3"><span class="mt-0.5 size-2 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>支持 Free / Multi / Challenge Live</li>
+          </ul>
+
+          <div class="mt-6 border-t border-slate-200 pt-4">
+            <dl class="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <dt class="text-slate-500">系统</dt>
+                <dd class="mt-1 font-semibold tabular-nums">Windows</dd>
+              </div>
+              <div>
+                <dt class="text-slate-500">连接</dt>
+                <dd class="mt-1 font-semibold tabular-nums">ADB</dd>
+              </div>
+              <div>
+                <dt class="text-slate-500">推荐分辨率</dt>
+                <dd class="mt-1 font-semibold tabular-nums">1600×900 / 1280×720</dd>
+              </div>
+              <div>
+                <dt class="text-slate-500">模拟器</dt>
+                <dd class="mt-1 font-semibold tabular-nums">MuMu / LDPlayer</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="mt-14">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-balance text-2xl font-semibold">功能</h2>
+        <p class="text-sm text-slate-500">在 GUI 中设置并 Start/Stop。</p>
+      </div>
+
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-balance text-base font-semibold">自动运行（Live）</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            支持 Free Live / Multi Live / Challenge Live，可配置曲库并辅助周回。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-balance text-base font-semibold">手动指定（Manual Play）</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            手动选择歌曲与难度并运行（例如 Stage Challenge）。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-balance text-base font-semibold">实用工具</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            ROI 测量、回避歌曲管理、Debug 日志等。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-balance text-base font-semibold">已知限制</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            模拟器卡顿/界面差异可能导致识别与时序偏移。
+            Multi Live 在歌曲同名场景可能出现选曲失败。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="requirements" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">环境与推荐设置</h2>
+
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-balance text-base font-semibold">必需</h3>
+          <ul class="mt-4 space-y-2 text-sm text-slate-700">
+            <li class="flex gap-3"><span class="mt-1 size-1.5 rounded-full bg-sky-600" aria-hidden="true"></span>Windows</li>
+            <li class="flex gap-3"><span class="mt-1 size-1.5 rounded-full bg-sky-600" aria-hidden="true"></span>带 ADB 的 Android 模拟器</li>
+            <li class="flex gap-3"><span class="mt-1 size-1.5 rounded-full bg-sky-600" aria-hidden="true"></span>MuMu / LDPlayer（已测试）</li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-balance text-base font-semibold">游戏内推荐</h3>
+          <ul class="mt-4 space-y-2 text-sm text-slate-700">
+            <li class="flex gap-3"><span class="mt-1 size-1.5 rounded-full bg-slate-400" aria-hidden="true"></span>速度：<span class="font-semibold tabular-nums">8.0</span></li>
+            <li class="flex gap-3"><span class="mt-1 size-1.5 rounded-full bg-slate-400" aria-hidden="true"></span>关闭 3D cut-in</li>
+            <li class="flex gap-3"><span class="mt-1 size-1.5 rounded-full bg-slate-400" aria-hidden="true"></span>轻量模式</li>
+            <li class="flex gap-3"><span class="mt-1 size-1.5 rounded-full bg-slate-400" aria-hidden="true"></span>开启 FAST/SLOW 与 Perfect 显示</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="get" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">获取 / 安装</h2>
+      <p class="mt-3 max-w-3xl text-pretty text-sm text-slate-700">
+        请将下面按钮替换成你的实际发布链接（GitHub Releases / BOOTH / 直链等）。
+      </p>
+
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-balance text-base font-semibold">1) 下载</h3>
+          <a class="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" href="#">
+            下载（替换链接）
+          </a>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-balance text-base font-semibold">2) 设置模拟器</h3>
+          <a class="mt-4 inline-flex w-full items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" href="#requirements">
+            查看要求
+          </a>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-balance text-base font-semibold">3) 运行</h3>
+          <a class="mt-4 inline-flex w-full items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" href="#faq">
+            FAQ
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">FAQ</h2>
+
+      <div class="mt-6 space-y-4">
+        <details class="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <summary class="cursor-pointer list-none text-sm font-semibold text-slate-900">
+            为什么经常失败？
+            <span class="float-right text-slate-400 group-open:text-slate-600" aria-hidden="true">+</span>
+          </summary>
+          <div class="mt-3 text-pretty text-sm text-slate-700">
+            模拟器卡顿、微小冻结或 UI 差异会导致时序偏移。请检查分辨率与游戏设置，并根据需要调节延迟参数。
+          </div>
+        </details>
+
+        <details class="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <summary class="cursor-pointer list-none text-sm font-semibold text-slate-900">
+            会封号吗？安全吗？
+            <span class="float-right text-slate-400 group-open:text-slate-600" aria-hidden="true">+</span>
+          </summary>
+          <div class="mt-3 text-pretty text-sm text-slate-700">
+            自动化可能违反游戏服务条款，无法保证安全性。请自行承担风险。
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="disclaimer" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">免责声明</h2>
+      <div class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+        <ul class="space-y-3 text-sm text-amber-900">
+          <li class="text-pretty">本项目为<span class="font-semibold">非官方</span>工具，与权利方/运营方无关。</li>
+          <li class="text-pretty">自动化可能违反服务条款，作者不对任何后果负责。</li>
+          <li class="text-pretty">稳定性依赖环境（分辨率、UI 语言、性能、网络、设置）。</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="mt-16 border-t border-slate-200 pt-8">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-sm text-slate-500">© <span class="tabular-nums">2026</span> Dream Helper (Autodori). All rights reserved.</p>
+        <div class="flex flex-wrap gap-3 text-sm">
+          <a class="text-slate-600 hover:text-slate-900" href="../">日本語</a>
+          <a class="text-slate-600 hover:text-slate-900" href="../en/">EN</a>
+          <a class="text-slate-600 hover:text-slate-900" href="#get">获取</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

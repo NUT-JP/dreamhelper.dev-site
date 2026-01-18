@@ -1,0 +1,5 @@
+/* Keep custom CSS minimal; prefer Tailwind defaults. */
+:root { color-scheme: light; }
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: dark; }
+}
