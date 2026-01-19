@@ -1,6 +1,6 @@
 # dreamhelper.dev (static site)
 
-Static product site for **Dream Helper (Autodori)**.
+Static product site for **Dream Helper**.
 
 ## Deploy (GitHub Pages)
 1. Create a GitHub repo (e.g. `dreamhelper.dev-site`) and push this folder.
