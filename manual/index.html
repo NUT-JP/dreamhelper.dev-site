@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>使い方マニュアル | Dream Helper (Autodori)</title>
+  <meta name="description" content="Dream Helper（Autodori）の詳細な使い方マニュアルです。購入者向けのセットアップガイドと操作説明。" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230ea5e9'/><path d='M22 42V22h20v20H22zm4-4h12V26H26v12z' fill='white'/></svg>" />
+  <link rel="stylesheet" href="../assets/site.css" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-dvh bg-white text-slate-900 antialiased">
+  <a class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-20 focus:rounded-lg focus:bg-slate-900 focus:px-3 focus:py-2 focus:text-white" href="#main">
+    本文へスキップ
+  </a>
+
+  <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70" style="padding-top: env(safe-area-inset-top);">
+    <div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3 sm:px-6">
+      <div class="flex items-center gap-3">
+        <a href="../" class="flex items-center gap-3 hover:opacity-80">
+          <div class="flex size-9 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm" aria-hidden="true">
+            <span class="font-semibold">DH</span>
+          </div>
+          <div class="leading-tight">
+            <div class="text-sm font-semibold">Dream Helper <span class="text-slate-500">(Autodori)</span></div>
+            <div class="text-xs text-slate-500">使い方マニュアル</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="flex items-center gap-3" aria-label="Primary">
+        <a class="text-sm text-slate-700 hover:text-slate-900" href="#setup">セットアップ</a>
+        <a class="text-sm text-slate-700 hover:text-slate-900" href="#basic">基本操作</a>
+        <a class="text-sm text-slate-700 hover:text-slate-900" href="#advanced">詳細設定</a>
+        <div class="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-50 p-1 sm:flex" aria-label="Language">
+          <span class="rounded-full bg-white px-2 py-1 text-xs font-medium text-slate-900 shadow-sm">日本語</span>
+          <a class="rounded-full px-2 py-1 text-xs font-medium text-slate-600 hover:text-slate-900" href="../en/manual/">EN</a>
+          <a class="rounded-full px-2 py-1 text-xs font-medium text-slate-600 hover:text-slate-900" href="../zh/manual/">中文</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="mx-auto max-w-4xl px-4 pb-16 pt-10 sm:px-6">
+    <!-- Hero -->
+    <section>
+      <p class="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs text-sky-700">
+        <span class="font-medium">購入者専用</span>
+        <span aria-hidden="true">•</span>
+        <span>マニュアル</span>
+      </p>
+
+      <h1 class="mt-4 text-balance text-3xl font-semibold leading-tight">
+        Dream Helper 使い方マニュアル
+      </h1>
+
+      <p class="mt-4 max-w-2xl text-pretty text-base text-slate-700">
+        このページでは Dream Helper の詳細な使い方を解説します。
+        初回セットアップから各機能の操作方法まで、順を追って説明しています。
+      </p>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="mt-10">
+      <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+        <h2 class="text-base font-semibold">目次</h2>
+        <nav class="mt-4">
+          <ol class="space-y-2 text-sm text-slate-700">
+            <li><a class="hover:text-sky-600" href="#setup">1. セットアップ</a></li>
+            <li><a class="hover:text-sky-600" href="#basic">2. 基本操作</a></li>
+            <li><a class="hover:text-sky-600" href="#freelive">3. フリーライブ</a></li>
+            <li><a class="hover:text-sky-600" href="#multilive">4. マルチライブ</a></li>
+            <li><a class="hover:text-sky-600" href="#challengelive">5. チャレンジライブ</a></li>
+            <li><a class="hover:text-sky-600" href="#manualplay">6. Manual Play（手動指定）</a></li>
+            <li><a class="hover:text-sky-600" href="#utilities">7. ユーティリティ機能</a></li>
+            <li><a class="hover:text-sky-600" href="#advanced">8. 詳細設定</a></li>
+            <li><a class="hover:text-sky-600" href="#troubleshooting">9. トラブルシューティング</a></li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <!-- 1. Setup -->
+    <section id="setup" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">1. セットアップ</h2>
+      <p class="mt-3 text-pretty text-sm text-slate-700">
+        Dream Helper を使用するための初期設定について説明します。
+      </p>
+
+      <div class="mt-6 space-y-6">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">1.1 動作環境の確認</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: 動作環境の詳細を記載 -->
+            動作環境の詳細をここに記載します。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">1.2 エミュレータの設定</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: エミュレータ設定の詳細を記載 -->
+            エミュレータの設定方法をここに記載します。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">1.3 ゲーム内設定</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: ゲーム内設定の詳細を記載 -->
+            ゲーム内の推奨設定をここに記載します。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">1.4 Dream Helper の起動</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: 起動方法の詳細を記載 -->
+            Dream Helper の起動方法をここに記載します。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Basic -->
+    <section id="basic" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">2. 基本操作</h2>
+      <p class="mt-3 text-pretty text-sm text-slate-700">
+        Dream Helper の基本的な操作方法について説明します。
+      </p>
+
+      <div class="mt-6 space-y-6">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">2.1 UI の概要</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: UI概要を記載 -->
+            メイン画面の各要素について説明します。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">2.2 接続方法</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: 接続方法を記載 -->
+            エミュレータへの接続方法を説明します。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">2.3 Start / Stop</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: Start/Stopの操作を記載 -->
+            自動化の開始・停止方法を説明します。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Free Live -->
+    <section id="freelive" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">3. フリーライブ</h2>
+      <p class="mt-3 text-pretty text-sm text-slate-700">
+        フリーライブモードの使い方について説明します。
+      </p>
+
+      <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <p class="text-pretty text-sm text-slate-700">
+          <!-- TODO: フリーライブの詳細を記載 -->
+          フリーライブの操作方法をここに記載します。
+        </p>
+      </div>
+    </section>
+
+    <!-- 4. Multi Live -->
+    <section id="multilive" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">4. マルチライブ</h2>
+      <p class="mt-3 text-pretty text-sm text-slate-700">
+        マルチライブモードの使い方について説明します。
+      </p>
+
+      <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <p class="text-pretty text-sm text-slate-700">
+          <!-- TODO: マルチライブの詳細を記載 -->
+          マルチライブの操作方法をここに記載します。
+        </p>
+      </div>
+    </section>
+
+    <!-- 5. Challenge Live -->
+    <section id="challengelive" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">5. チャレンジライブ</h2>
+      <p class="mt-3 text-pretty text-sm text-slate-700">
+        チャレンジライブモードの使い方について説明します。
+      </p>
+
+      <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <p class="text-pretty text-sm text-slate-700">
+          <!-- TODO: チャレンジライブの詳細を記載 -->
+          チャレンジライブの操作方法をここに記載します。
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. Manual Play -->
+    <section id="manualplay" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">6. Manual Play（手動指定）</h2>
+      <p class="mt-3 text-pretty text-sm text-slate-700">
+        曲と難易度を手動で指定して実行するモードについて説明します。
+      </p>
+
+      <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <p class="text-pretty text-sm text-slate-700">
+          <!-- TODO: Manual Playの詳細を記載 -->
+          Manual Play の操作方法をここに記載します。
+        </p>
+      </div>
+    </section>
+
+    <!-- 7. Utilities -->
+    <section id="utilities" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">7. ユーティリティ機能</h2>
+      <p class="mt-3 text-pretty text-sm text-slate-700">
+        楽曲購入、キャラ育成などの補助機能について説明します。
+      </p>
+
+      <div class="mt-6 space-y-6">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">7.1 楽曲購入</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: 楽曲購入の詳細を記載 -->
+            CiRCLE ショップでの楽曲自動購入について説明します。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">7.2 キャラ育成・エピソード回収</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: 育成機能の詳細を記載 -->
+            キャラクターの自動訓練とエピソード回収について説明します。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Advanced -->
+    <section id="advanced" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">8. 詳細設定</h2>
+      <p class="mt-3 text-pretty text-sm text-slate-700">
+        パフォーマンス調整や細かな設定について説明します。
+      </p>
+
+      <div class="mt-6 space-y-6">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">8.1 遅延調整（Photogate）</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: 遅延調整の詳細を記載 -->
+            タイミング調整の方法について説明します。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">8.2 曲の回避設定</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: 回避設定の詳細を記載 -->
+            特定の曲を避ける設定について説明します。
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 class="text-base font-semibold">8.3 ライブブースト回復設定</h3>
+          <p class="mt-2 text-pretty text-sm text-slate-700">
+            <!-- TODO: ライブブースト設定の詳細を記載 -->
+            ライブブーストの自動回復設定について説明します。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Troubleshooting -->
+    <section id="troubleshooting" class="mt-14">
+      <h2 class="text-balance text-2xl font-semibold">9. トラブルシューティング</h2>
+      <p class="mt-3 text-pretty text-sm text-slate-700">
+        よくある問題と解決方法について説明します。
+      </p>
+
+      <div class="mt-6 space-y-4">
+        <details class="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <summary class="cursor-pointer list-none text-sm font-semibold text-slate-900">
+            エミュレータに接続できない
+            <span class="float-right text-slate-400 group-open:text-slate-600" aria-hidden="true">+</span>
+          </summary>
+          <div class="mt-3 text-pretty text-sm text-slate-700">
+            <!-- TODO: 解決方法を記載 -->
+            接続できない場合の対処方法を記載します。
+          </div>
+        </details>
+
+        <details class="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <summary class="cursor-pointer list-none text-sm font-semibold text-slate-900">
+            自動演奏の成功率が低い
+            <span class="float-right text-slate-400 group-open:text-slate-600" aria-hidden="true">+</span>
+          </summary>
+          <div class="mt-3 text-pretty text-sm text-slate-700">
+            <!-- TODO: 解決方法を記載 -->
+            成功率を上げるための対処方法を記載します。
+          </div>
+        </details>
+
+        <details class="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <summary class="cursor-pointer list-none text-sm font-semibold text-slate-900">
+            画面認識がうまくいかない
+            <span class="float-right text-slate-400 group-open:text-slate-600" aria-hidden="true">+</span>
+          </summary>
+          <div class="mt-3 text-pretty text-sm text-slate-700">
+            <!-- TODO: 解決方法を記載 -->
+            画面認識の問題への対処方法を記載します。
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- Back to top -->
+    <div class="mt-14 text-center">
+      <a class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" href="../">
+        トップページに戻る
+      </a>
+    </div>
+
+    <footer class="mt-16 border-t border-slate-200 pt-8">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-sm text-slate-500">© <span class="tabular-nums">2026</span> Dream Helper (Autodori). All rights reserved.</p>
+        <div class="flex flex-wrap gap-3 text-sm">
+          <a class="text-slate-600 hover:text-slate-900" href="../en/manual/">English</a>
+          <a class="text-slate-600 hover:text-slate-900" href="../zh/manual/">中文</a>
+          <a class="text-slate-600 hover:text-slate-900" href="../">トップ</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
