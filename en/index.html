@@ -4,356 +4,615 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Dream Helper | Windows automation helper for BanG Dream! (Garupa)</title>
-  <meta name="description" content="Dream Helper is a Windows automation helper that drives an Android emulator via ADB + MaaFramework to assist song selection and live runs." />
+  <title>Dream Helper | Rhythm Game Automation - Garupa & Project SEKAI</title>
+  <meta name="description" content="Dream Helper uses AI to actually play rhythm games. Zero app modification, extremely low BAN risk. Automate events and ranked matches while you sleep." />
 
   <meta property="og:title" content="Dream Helper" />
-  <meta property="og:description" content="Windows automation helper for BanG Dream! (Garupa) on an Android emulator." />
+  <meta property="og:description" content="AI-powered rhythm game automation. Zero app modification, extremely low BAN risk." />
   <meta property="og:type" content="website" />
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230ea5e9'/><path d='M22 42V22h20v20H22zm4-4h12V26H26v12z' fill='white'/></svg>" />
-  <link rel="stylesheet" href="../assets/site.css" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          // no custom colors; stick to Tailwind tokens
-        }
-      }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-deep: #06060b;
+      --bg-card: rgba(255,255,255,0.04);
+      --bg-card-hover: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --border-bright: rgba(255,255,255,0.15);
+      --text-primary: #f0f0f5;
+      --text-secondary: #8a8a9a;
+      --text-muted: #55556a;
+      --accent: #22d3ee;
+      --accent-dim: rgba(34,211,238,0.15);
+      --accent-glow: rgba(34,211,238,0.25);
+      --pink: #f472b6;
+      --pink-dim: rgba(244,114,182,0.15);
+      --amber: #fbbf24;
     }
-  </script>
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(6,6,11,0.95), rgba(6,6,11,0.8)),
+        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px);
+      z-index: -2;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 60%;
+      background: radial-gradient(ellipse, rgba(34,211,238,0.06) 0%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .skip-link {
+      position: absolute; left: -9999px; z-index: 50;
+      padding: 0.5rem 1rem; background: var(--accent); color: var(--bg-deep);
+      border-radius: 0.5rem; font-weight: 600; font-size: 0.875rem;
+    }
+    .skip-link:focus { left: 1rem; top: 1rem; }
+
+    header {
+      position: sticky; top: 0; z-index: 40;
+      border-bottom: 1px solid var(--border);
+      background: rgba(6,6,11,0.85);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      padding-top: env(safe-area-inset-top);
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0.75rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo-group { display: flex; align-items: center; gap: 0.75rem; }
+    .logo-mark {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, #06b6d4, #22d3ee);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.8rem; color: var(--bg-deep); letter-spacing: -0.02em;
+    }
+    .logo-text { font-weight: 700; font-size: 1rem; }
+
+    nav { display: flex; align-items: center; gap: 0.25rem; }
+    nav a {
+      font-size: 0.8rem; color: var(--text-secondary); text-decoration: none;
+      padding: 0.4rem 0.7rem; border-radius: 0.5rem; transition: color 0.15s, background 0.15s;
+    }
+    nav a:hover { color: var(--text-primary); background: var(--bg-card); }
+
+    .lang-switch {
+      display: none; align-items: center; gap: 2px; padding: 3px;
+      border-radius: 999px; border: 1px solid var(--border); background: var(--bg-card); margin-left: 0.5rem;
+    }
+    @media (min-width: 640px) { .lang-switch { display: flex; } }
+    .lang-switch a, .lang-switch span {
+      font-size: 0.7rem; font-weight: 500; padding: 0.25rem 0.6rem;
+      border-radius: 999px; text-decoration: none; transition: all 0.15s;
+    }
+    .lang-switch a { color: var(--text-muted); }
+    .lang-switch a:hover { color: var(--text-secondary); background: transparent; }
+    .lang-active { background: rgba(255,255,255,0.1) !important; color: var(--text-primary) !important; }
+
+    main { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Hero */
+    .hero { padding: 5rem 0 4rem; text-align: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.35rem 1rem; border-radius: 999px;
+      border: 1px solid var(--accent-dim); background: var(--accent-dim);
+      font-size: 0.75rem; font-weight: 500; color: var(--accent);
+      animation: fadeInUp 0.6s ease-out both;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .hero h1 {
+      font-weight: 800; font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1.15; letter-spacing: -0.03em; margin-top: 1.5rem;
+      animation: fadeInUp 0.6s ease-out 0.1s both;
+    }
+    .hero h1 .accent { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 1.05rem; color: var(--text-secondary); max-width: 600px;
+      margin: 1.25rem auto 0; line-height: 1.7;
+      animation: fadeInUp 0.6s ease-out 0.2s both;
+    }
+
+    .key-message {
+      margin: 2.5rem auto 0; max-width: 720px; border-radius: 16px;
+      border: 1px solid var(--accent-dim);
+      background: linear-gradient(135deg, rgba(34,211,238,0.06), rgba(34,211,238,0.02));
+      padding: 1.75rem 2rem; text-align: left;
+      animation: fadeInUp 0.6s ease-out 0.3s both; position: relative; overflow: hidden;
+    }
+    .key-message::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%; background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+    .key-message-title {
+      font-weight: 700; font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--accent); margin-bottom: 1rem;
+    }
+    .key-message ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .key-message li {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      font-size: 0.95rem; line-height: 1.6;
+    }
+    .key-message li .icon { flex-shrink: 0; margin-top: 0.25rem; font-size: 1.1rem; }
+    .key-message .highlight { color: var(--accent); font-weight: 600; }
+
+    .hero-cta {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;
+      margin-top: 2rem; animation: fadeInUp 0.6s ease-out 0.4s both;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.75rem; border-radius: 10px;
+      background: linear-gradient(135deg, #06b6d4, #22d3ee);
+      color: var(--bg-deep); font-weight: 700; font-size: 0.9rem;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 30px var(--accent-glow); }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.75rem; border-radius: 10px;
+      background: var(--bg-card); color: var(--text-primary); font-weight: 600; font-size: 0.9rem;
+      text-decoration: none; border: 1px solid var(--border-bright);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-secondary:hover { background: var(--bg-card-hover); border-color: rgba(255,255,255,0.25); }
+
+    /* Sections */
+    .section-label {
+      font-weight: 700; font-size: 0.7rem; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-weight: 700; font-size: clamp(1.5rem, 3vw, 2rem);
+      letter-spacing: -0.02em; margin-bottom: 0.5rem;
+    }
+    .section-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; max-width: 500px; }
+
+    /* Games */
+    .games-section { padding: 3rem 0; }
+    .games-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem; }
+    @media (min-width: 768px) { .games-grid { grid-template-columns: 1fr 1fr; } }
+
+    .game-card {
+      border-radius: 16px; border: 1px solid var(--border); background: var(--bg-card);
+      padding: 2rem; transition: border-color 0.2s, background 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .game-card:hover { border-color: var(--border-bright); background: var(--bg-card-hover); }
+    .game-card::after {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 120px; height: 120px; border-radius: 50%; filter: blur(60px);
+      opacity: 0.15; pointer-events: none;
+    }
+    .game-card.garupa::after { background: var(--accent); }
+    .game-card.prosekai::after { background: var(--pink); }
+
+    .game-tag {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.7rem; font-weight: 600; padding: 0.3rem 0.75rem; border-radius: 999px; margin-bottom: 1rem;
+    }
+    .game-tag.cyan { background: var(--accent-dim); color: var(--accent); }
+    .game-tag.pink { background: var(--pink-dim); color: var(--pink); }
+    .game-tag.new-badge { background: rgba(251,191,36,0.15); color: var(--amber); margin-left: 0.5rem; }
+
+    .game-card h3 { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .game-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+    .game-features { list-style: none; margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .game-features li {
+      font-size: 0.8rem; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .game-features li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .garupa .game-features li::before { background: var(--accent); }
+    .prosekai .game-features li::before { background: var(--pink); }
+
+    /* Showcase */
+    .showcase-section { padding: 4rem 0 3rem; }
+    .video-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: 2rem; }
+    @media (min-width: 768px) { .video-grid { grid-template-columns: 1fr 1fr; } }
+
+    .video-card {
+      border-radius: 16px; border: 1px solid var(--border); overflow: hidden;
+      background: var(--bg-card); transition: border-color 0.2s;
+    }
+    .video-card:hover { border-color: var(--border-bright); }
+    .video-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; background: #111118; }
+    .video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    .video-info { padding: 1rem 1.25rem; }
+    .video-info h3 { font-weight: 600; font-size: 0.9rem; }
+    .video-info p { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+    /* Features */
+    .features-section { padding: 3rem 0; }
+    .features-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem; }
+    @media (min-width: 768px) { .features-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .feature-card {
+      border-radius: 16px; border: 1px solid var(--border); background: var(--bg-card);
+      padding: 1.75rem; transition: border-color 0.2s, background 0.2s;
+    }
+    .feature-card:hover { border-color: var(--border-bright); background: var(--bg-card-hover); }
+    .feature-card h3 { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; }
+    .feature-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+    .feature-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 1rem;
+    }
+
+    /* Requirements */
+    .req-section { padding: 3rem 0; }
+    .req-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem; }
+    @media (min-width: 768px) { .req-grid { grid-template-columns: 1fr 1fr; } }
+
+    .req-card { border-radius: 16px; border: 1px solid var(--border); background: var(--bg-card); padding: 1.75rem; }
+    .req-card h3 { font-weight: 600; font-size: 1rem; margin-bottom: 1rem; }
+    .req-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .req-list li {
+      font-size: 0.85rem; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .req-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+    .req-list.system li::before { background: var(--accent); }
+    .req-list.ingame li::before { background: var(--text-muted); }
+    .req-list .val { font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+
+    /* Discord */
+    .discord-section { padding: 4rem 0; }
+    .discord-card {
+      border-radius: 20px; border: 1px solid var(--border-bright);
+      background: linear-gradient(135deg, rgba(34,211,238,0.05), rgba(244,114,182,0.03));
+      padding: 3rem; text-align: center;
+    }
+    .discord-card h2 { font-weight: 700; font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .discord-card p {
+      font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;
+      max-width: 450px; margin-left: auto; margin-right: auto; line-height: 1.7;
+    }
+
+    /* FAQ */
+    .faq-section { padding: 3rem 0; }
+    details {
+      border-radius: 12px; border: 1px solid var(--border); background: var(--bg-card);
+      margin-bottom: 0.5rem; transition: border-color 0.2s;
+    }
+    details:hover, details[open] { border-color: var(--border-bright); }
+    summary {
+      cursor: pointer; list-style: none; padding: 1rem 1.25rem;
+      font-size: 0.9rem; font-weight: 600;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    summary::-webkit-details-marker { display: none; }
+    .chevron { color: var(--text-muted); transition: transform 0.2s; font-size: 0.8rem; }
+    details[open] .chevron { transform: rotate(45deg); }
+    .faq-body {
+      padding: 0 1.25rem 1.25rem; font-size: 0.85rem;
+      color: var(--text-secondary); line-height: 1.7;
+    }
+    .faq-body .hl { font-weight: 600; color: var(--text-primary); }
+
+    /* Disclaimer */
+    .disclaimer-section { padding: 2rem 0; }
+    .disclaimer-box {
+      border-radius: 16px; border: 1px solid rgba(251,191,36,0.2);
+      background: rgba(251,191,36,0.04); padding: 1.5rem 1.75rem;
+    }
+    .disclaimer-box h2 { font-weight: 700; font-size: 1rem; color: var(--amber); margin-bottom: 1rem; }
+    .disclaimer-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .disclaimer-list li {
+      font-size: 0.8rem; color: rgba(251,191,36,0.8); line-height: 1.6;
+      padding-left: 1rem; position: relative;
+    }
+    .disclaimer-list li::before { content: '!'; position: absolute; left: 0; font-weight: 700; color: var(--amber); }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem 0 3rem; margin-top: 2rem;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;
+    }
+    .footer-inner p { font-size: 0.75rem; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 1.25rem; }
+    .footer-links a { font-size: 0.75rem; color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text-secondary); }
+
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .anim-in { animation: fadeInUp 0.5s ease-out both; }
+    @media (prefers-reduced-motion: reduce) {
+      *,*::before,*::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
 </head>
-<body class="min-h-dvh bg-white text-slate-900 antialiased">
-  <a class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-20 focus:rounded-lg focus:bg-slate-900 focus:px-3 focus:py-2 focus:text-white" href="#main">
-    Skip to content
-  </a>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70" style="padding-top: env(safe-area-inset-top);">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-      <div class="flex items-center gap-3">
-        <div class="flex size-9 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm" aria-hidden="true">
-          <span class="font-semibold">DH</span>
-        </div>
-        <div class="leading-tight">
-          <div class="text-sm font-semibold">Dream Helper</div>
-          <div class="text-xs text-slate-500">Windows automation helper for BanG Dream! (Garupa)</div>
-        </div>
+  <header>
+    <div class="header-inner">
+      <div class="logo-group">
+        <div class="logo-mark" aria-hidden="true">DH</div>
+        <span class="logo-text">Dream Helper</span>
       </div>
-
-      <nav class="flex items-center gap-3" aria-label="Primary">
-        <a class="text-sm text-slate-700 hover:text-slate-900" href="#showcase">Videos</a>
-        <a class="text-sm text-slate-700 hover:text-slate-900" href="#features">Features</a>
-        <a class="text-sm text-slate-700 hover:text-slate-900" href="#requirements">Requirements</a>
-        <a class="text-sm text-slate-700 hover:text-slate-900" href="#faq">FAQ</a>
-        <div class="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-50 p-1 sm:flex" aria-label="Language">
-          <a class="rounded-full px-2 py-1 text-xs font-medium text-slate-600 hover:text-slate-900" href="../">日本語</a>
-          <span class="rounded-full bg-white px-2 py-1 text-xs font-medium text-slate-900 shadow-sm">EN</span>
-          <a class="rounded-full px-2 py-1 text-xs font-medium text-slate-600 hover:text-slate-900" href="../zh/">中文</a>
+      <nav aria-label="Primary">
+        <a href="#games">Games</a>
+        <a href="#showcase">Videos</a>
+        <a href="#features">Features</a>
+        <a href="#faq">FAQ</a>
+        <div class="lang-switch" aria-label="Language">
+          <a href="../">日本語</a>
+          <span class="lang-active">EN</span>
+          <a href="../zh/">中文</a>
         </div>
       </nav>
     </div>
   </header>
 
-  <main id="main" class="mx-auto max-w-6xl px-4 pb-16 pt-10 sm:px-6">
-    <section class="grid gap-8 lg:grid-cols-12 lg:items-start">
-      <div class="lg:col-span-7">
-        <p class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-700">
-          <span class="font-medium">Windows</span>
-        </p>
-
-        <h1 class="mt-4 text-balance text-3xl font-semibold leading-tight sm:text-4xl">
-          Automate Garupa on an Android emulator with <span class="text-sky-600">Dream Helper</span>
-        </h1>
-
-        <p class="mt-4 max-w-2xl text-pretty text-base text-slate-700 sm:text-lg">
-          <strong>Dream Helper</strong> is a Windows automation tool that drives an Android emulator
-          to assist song selection and live runs.
-        </p>
-
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a class="inline-flex items-center justify-center rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" href="https://discord.gg/kcp3nExD8s">
-            Join Discord
-          </a>
-          <a class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" href="#disclaimer">
-            Disclaimer
-          </a>
-        </div>
-
-        <div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-          <p class="text-sm text-slate-700">
-            <span class="font-semibold">Important:</span>
-            This project is <strong>unofficial</strong> and not affiliated with any rights holders.
-            Use at your own risk.
-          </p>
-        </div>
+  <main id="main">
+    <section class="hero">
+      <div class="hero-badge">
+        <span class="dot" aria-hidden="true"></span>
+        Project SEKAI now supported
       </div>
 
-      <div class="lg:col-span-5">
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h2 class="text-balance text-lg font-semibold">What it does</h2>
-          <ul class="mt-4 space-y-3 text-sm text-slate-700">
-            <li class="flex gap-3"><span class="mt-0.5 size-2 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>Connects to emulator and runs sessions end-to-end</li>
-            <li class="flex gap-3"><span class="mt-0.5 size-2 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>Auto-play to collect stars in bulk</li>
-            <li class="flex gap-3"><span class="mt-0.5 size-2 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>Auto Live Boost recovery to climb event rankings</li>
-            <li class="flex gap-3"><span class="mt-0.5 size-2 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>Supports Free Live / Multi Live / Challenge Live</li>
-            <li class="flex gap-3"><span class="mt-0.5 size-2 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>Auto character training and episode collection (earn more stars)</li>
-          </ul>
+      <h1>Events clear<br><span class="accent">while you sleep</span></h1>
 
-          <div class="mt-6 border-t border-slate-200 pt-4">
-            <dl class="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <dt class="text-slate-500">OS</dt>
-                <dd class="mt-1 font-semibold tabular-nums">Windows</dd>
-              </div>
-              <div>
-                <dt class="text-slate-500">Connection</dt>
-                <dd class="mt-1 font-semibold tabular-nums">ADB</dd>
-              </div>
-              <div>
-                <dt class="text-slate-500">Recommended res.</dt>
-                <dd class="mt-1 font-semibold tabular-nums">1280×720</dd>
-              </div>
-              <div>
-                <dt class="text-slate-500">Emulators</dt>
-                <dd class="mt-1 font-semibold tabular-nums">MuMu / LDPlayer</dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Showcase Section -->
-    <section id="showcase" class="mt-14">
-      <h2 class="text-balance text-2xl font-semibold">Gameplay Videos</h2>
-      <p class="mt-3 text-pretty text-sm text-slate-700">
-        See Dream Helper in action.
+      <p class="hero-sub">
+        An automation tool where AI <strong>actually plays</strong> the game.<br>
+        Zero app modification. Just leave it running and events, ranked matches run automatically.
       </p>
 
-      <div class="mt-6 grid gap-6 md:grid-cols-2">
-        <!-- Video 1 -->
-        <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div class="relative aspect-video w-full bg-slate-100">
-            <!-- YouTube embed placeholder - replace VIDEO_ID with actual ID -->
-            <iframe
-              class="absolute inset-0 size-full"
-              src="https://www.youtube-nocookie.com/embed/VIDEO_ID_1"
-              title="Dream Helper Demo 1"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              loading="lazy"
-            ></iframe>
-          </div>
-          <div class="p-4">
-            <h3 class="text-sm font-semibold">Free Live Auto-Run</h3>
-            <p class="mt-1 text-pretty text-xs text-slate-500">Full flow from song selection to completion</p>
-          </div>
-        </div>
-
-        <!-- Video 2 -->
-        <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div class="relative aspect-video w-full bg-slate-100">
-            <!-- YouTube embed placeholder - replace VIDEO_ID with actual ID -->
-            <iframe
-              class="absolute inset-0 size-full"
-              src="https://www.youtube-nocookie.com/embed/VIDEO_ID_2"
-              title="Dream Helper Demo 2"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              loading="lazy"
-            ></iframe>
-          </div>
-          <div class="p-4">
-            <h3 class="text-sm font-semibold">Multi Live Auto-Join</h3>
-            <p class="mt-1 text-pretty text-xs text-slate-500">From matchmaking to results screen</p>
-          </div>
-        </div>
+      <div class="key-message">
+        <div class="key-message-title">Why Dream Helper?</div>
+        <ul>
+          <li>
+            <span class="icon" aria-hidden="true">&#x2714;</span>
+            <span><span class="highlight">Zero app modification</span> — no judgment tampering. AI reads the screen and generates real touch inputs to play.</span>
+          </li>
+          <li>
+            <span class="icon" aria-hidden="true">&#x2714;</span>
+            <span><span class="highlight">Extremely low BAN risk</span> — no game files touched. Zero bans reported since October 2025 launch.</span>
+          </li>
+          <li>
+            <span class="icon" aria-hidden="true">&#x2714;</span>
+            <span><span class="highlight">Fully AFK</span> — start before bed, wake up with event points earned, ranked matches done.</span>
+          </li>
+        </ul>
       </div>
 
-      <p class="mt-4 text-xs text-slate-500">
-        * Videos recorded in actual play environment. Results may vary depending on your setup.
-      </p>
-    </section>
-
-    <section id="features" class="mt-14">
-      <div class="flex items-end justify-between gap-4">
-        <h2 class="text-balance text-2xl font-semibold">Features</h2>
-        <p class="text-sm text-slate-500">Control Start/Stop and settings from the GUI.</p>
-      </div>
-
-      <div class="mt-6 grid gap-4 md:grid-cols-2">
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 class="text-balance text-base font-semibold">Automation runs (Live)</h3>
-          <p class="mt-2 text-pretty text-sm text-slate-700">
-            Supports Free Live, Multi Live, and Challenge Live. Helps you run sessions with configurable song pools.
-          </p>
-          <ul class="mt-4 space-y-2 text-sm text-slate-700">
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true"></span>Filter non-full-combo songs to collect stars (Free Live)</li>
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true"></span>Limit selection to favorites</li>
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true"></span>Auto-recover Live Boost (stars / drinks)</li>
-          </ul>
-        </div>
-
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 class="text-balance text-base font-semibold">Manual Play</h3>
-          <p class="mt-2 text-pretty text-sm text-slate-700">
-            Pick a song and difficulty explicitly. Intended for cases like Stage Challenge.
-          </p>
-          <ul class="mt-4 space-y-2 text-sm text-slate-700">
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true"></span>Search and select a song</li>
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true"></span>Set difficulty and start</li>
-          </ul>
-        </div>
-
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 class="text-balance text-base font-semibold">Utilities</h3>
-          <p class="mt-2 text-pretty text-sm text-slate-700">
-            Automation tasks (e.g., song purchasing, character training tasks)
-          </p>
-        </div>
-      </div>
-
-      <div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-5">
-        <h3 class="text-balance text-base font-semibold">Known limitations</h3>
-        <p class="mt-2 text-pretty text-sm text-slate-700">
-          Timing can drift due to emulator lag, micro-freezes, or noise, making auto-play unstable.
-          Success rate may drop on lower-spec environments.
-        </p>
-        <p class="mt-3 text-pretty text-sm text-slate-700">
-          In Multi Live, duplicate song titles (e.g., Orange, Silhouette President) may cause selection failures
-          in <span class="font-semibold">about 50% of cases</span>.
-          Also, Multi Live difficulty is currently <span class="font-semibold">fixed to EXPERT</span> (may expand if there's demand).
-        </p>
+      <div class="hero-cta">
+        <a class="btn-primary" href="https://discord.gg/kcp3nExD8s">
+          <svg width="20" height="16" viewBox="0 0 20 16" fill="currentColor" aria-hidden="true"><path d="M16.93 1.33A16.4 16.4 0 0012.86 0a12 12 0 00-.53 1.08 15.3 15.3 0 00-4.66 0A11.5 11.5 0 007.14 0 16.5 16.5 0 003.07 1.33 17.2 17.2 0 00.07 13.24a16.6 16.6 0 005.07 2.59 12.3 12.3 0 001.08-1.78 10.7 10.7 0 01-1.7-.83c.14-.1.28-.21.42-.32a11.8 11.8 0 0010.12 0c.14.11.28.22.42.32-.54.33-1.11.6-1.7.83.3.63.66 1.22 1.08 1.78a16.5 16.5 0 005.07-2.59A17.1 17.1 0 0016.93 1.33zM6.68 10.84c-1.1 0-2.01-1.03-2.01-2.3 0-1.26.89-2.3 2.01-2.3 1.13 0 2.03 1.03 2.01 2.3 0 1.27-.89 2.3-2.01 2.3zm6.64 0c-1.1 0-2.01-1.03-2.01-2.3 0-1.26.89-2.3 2.01-2.3 1.13 0 2.03 1.03 2.01 2.3 0 1.27-.88 2.3-2.01 2.3z"/></svg>
+          Join Discord
+        </a>
+        <a class="btn-secondary" href="#disclaimer">Disclaimer</a>
       </div>
     </section>
 
-    <section id="requirements" class="mt-14">
-      <h2 class="text-balance text-2xl font-semibold">Requirements</h2>
+    <section id="games" class="games-section">
+      <p class="section-label">Supported Games</p>
+      <h2 class="section-title">Compatible Titles</h2>
+      <p class="section-desc">Two popular rhythm games supported. Auto-play runs on an Android emulator.</p>
 
-      <div class="mt-6 grid gap-4 md:grid-cols-2">
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 class="text-balance text-base font-semibold">System</h3>
-          <ul class="mt-4 space-y-2 text-sm text-slate-700">
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>Windows</li>
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>Android emulator with ADB</li>
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-sky-600" aria-hidden="true"></span>MuMu or LDPlayer (tested)</li>
+      <div class="games-grid">
+        <div class="game-card garupa">
+          <span class="game-tag cyan">BanG Dream!</span>
+          <h3>Garupa (Girls Band Party!)</h3>
+          <p>Supports Free Live, Multi Live, and Challenge Live auto-runs.</p>
+          <ul class="game-features">
+            <li>Fully automated song select, play, and result loop</li>
+            <li>Auto Live Boost recovery (stars / drinks)</li>
+            <li>Non-full-combo star collection</li>
+            <li>Character training & episode collection</li>
           </ul>
         </div>
 
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 class="text-balance text-base font-semibold">In-game settings (recommended)</h3>
-          <ul class="mt-4 space-y-2 text-sm text-slate-700">
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true"></span>Scroll speed: <span class="font-semibold tabular-nums">9.30</span></li>
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true"></span>Disable 3D cut-in</li>
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true"></span>Performance mode: Lightweight</li>
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true"></span>Enable FAST/SLOW and Perfect display</li>
-            <li class="flex gap-3"><span class="mt-1 size-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true"></span>Resolution: <span class="font-semibold tabular-nums">1280×720</span></li>
+        <div class="game-card prosekai">
+          <span class="game-tag pink">Project SEKAI</span>
+          <span class="game-tag new-badge">NEW</span>
+          <h3>Project SEKAI</h3>
+          <p>Newly supported. Automate event grinding and ranked matches.</p>
+          <ul class="game-features">
+            <li>Automated event grinding</li>
+            <li>Ranked match auto-join & play</li>
+            <li>Energy management automation</li>
+            <li>More features being added</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section id="get" class="mt-14">
-      <h2 class="text-balance text-2xl font-semibold">Join the Discord</h2>
-      <p class="mt-3 max-w-3xl text-pretty text-sm text-slate-700">
-        Downloads, announcements, and support are shared in the Discord server. Join there to get the latest build and contact us.
-      </p>
+    <section id="showcase" class="showcase-section">
+      <p class="section-label">In Action</p>
+      <h2 class="section-title">Gameplay Videos</h2>
+      <p class="section-desc">Watch AI recognize the screen in real-time and play.</p>
 
-      <div class="mt-6 grid gap-4 md:grid-cols-3">
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 class="text-balance text-base font-semibold">1) Join Discord</h3>
-          <p class="mt-2 text-pretty text-sm text-slate-700">Get the latest builds, updates, and support in one place.</p>
-          <a class="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" href="https://discord.gg/kcp3nExD8s">
-            Join Discord
-          </a>
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/4yeUo9L1aPA?si=ihXjfndMfGIvvLYj" title="Dream Helper Demo 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <h3>Auto-Play Demo 1</h3>
+            <p>Real-time AI gameplay</p>
+          </div>
         </div>
-
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 class="text-balance text-base font-semibold">2) Configure emulator</h3>
-          <p class="mt-2 text-pretty text-sm text-slate-700">Enable ADB and set a 16:9 resolution.</p>
-          <a class="mt-4 inline-flex w-full items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" href="#requirements">
-            See requirements
-          </a>
-        </div>
-
-        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 class="text-balance text-base font-semibold">3) Start</h3>
-          <p class="mt-2 text-pretty text-sm text-slate-700">Pick mode/difficulty/live mode in the UI and run.</p>
-          <a class="mt-4 inline-flex w-full items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" href="#faq">
-            FAQ
-          </a>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/5SJ5xgexRAE?si=ay4oTpF21h97kMGr" title="Dream Helper Demo 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-info">
+            <h3>Auto-Play Demo 2</h3>
+            <p>Full flow from song select to results</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="faq" class="mt-14">
-      <h2 class="text-balance text-2xl font-semibold">FAQ</h2>
+    <section id="features" class="features-section">
+      <p class="section-label">Features</p>
+      <h2 class="section-title">What It Does</h2>
 
-      <div class="mt-6 space-y-4">
-        <details class="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <summary class="cursor-pointer list-none text-sm font-semibold text-slate-900">
-            It fails more often on my PC
-            <span class="float-right text-slate-400 group-open:text-slate-600" aria-hidden="true">+</span>
-          </summary>
-          <div class="mt-3 text-pretty text-sm text-slate-700">
-            Emulator lag and micro-freezes can break timing.
-            Check your resolution and in-game settings, and tune latency/offset settings (e.g., Photogate) if available.
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--accent-dim);" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <h3>Full Auto Live</h3>
+          <p>Song select, play, and results — all automatic. Pick a mode and hit Start.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--pink-dim);" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--pink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg></div>
+          <h3>Auto Resource Recovery</h3>
+          <p>Automatically recovers Live Boost / energy when depleted for extended AFK runs.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(251,191,36,0.15);" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <h3>Sleep & Earn</h3>
+          <p>Start before bed. Wake up with event points earned. Fully hands-off.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(34,197,94,0.15);" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Safe by Design</h3>
+          <p>Zero app modification. Touch inputs via ADB only. Game data is never touched.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(168,85,247,0.15);" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <h3>Manual Mode</h3>
+          <p>Specify song and difficulty for targeted runs like Stage Challenge.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(236,72,153,0.15);" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+          <h3>Utilities</h3>
+          <p>Song purchasing, character training, episode collection, and more.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="requirements" class="req-section">
+      <p class="section-label">Requirements</p>
+      <h2 class="section-title">System Requirements</h2>
+      <div class="req-grid">
+        <div class="req-card">
+          <h3>System</h3>
+          <ul class="req-list system">
+            <li>Windows</li>
+            <li>Android emulator with ADB</li>
+            <li>MuMu / LDPlayer (tested)</li>
+          </ul>
+        </div>
+        <div class="req-card">
+          <h3>In-Game Settings (recommended)</h3>
+          <ul class="req-list ingame">
+            <li>Scroll speed: <span class="val">9.30</span></li>
+            <li>3D cut-in: <span class="val">OFF</span></li>
+            <li>Performance mode: <span class="val">Lightweight</span></li>
+            <li>FAST/SLOW & Perfect display: <span class="val">ON</span></li>
+            <li>Resolution: <span class="val">1280×720</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="get" class="discord-section">
+      <div class="discord-card">
+        <h2>Get It on Discord</h2>
+        <p>Downloads, updates, and support — all on Discord.</p>
+        <a class="btn-primary" href="https://discord.gg/kcp3nExD8s">
+          <svg width="20" height="16" viewBox="0 0 20 16" fill="currentColor" aria-hidden="true"><path d="M16.93 1.33A16.4 16.4 0 0012.86 0a12 12 0 00-.53 1.08 15.3 15.3 0 00-4.66 0A11.5 11.5 0 007.14 0 16.5 16.5 0 003.07 1.33 17.2 17.2 0 00.07 13.24a16.6 16.6 0 005.07 2.59 12.3 12.3 0 001.08-1.78 10.7 10.7 0 01-1.7-.83c.14-.1.28-.21.42-.32a11.8 11.8 0 0010.12 0c.14.11.28.22.42.32-.54.33-1.11.6-1.7.83.3.63.66 1.22 1.08 1.78a16.5 16.5 0 005.07-2.59A17.1 17.1 0 0016.93 1.33zM6.68 10.84c-1.1 0-2.01-1.03-2.01-2.3 0-1.26.89-2.3 2.01-2.3 1.13 0 2.03 1.03 2.01 2.3 0 1.27-.89 2.3-2.01 2.3zm6.64 0c-1.1 0-2.01-1.03-2.01-2.3 0-1.26.89-2.3 2.01-2.3 1.13 0 2.03 1.03 2.01 2.3 0 1.27-.88 2.3-2.01 2.3z"/></svg>
+          Join Discord
+        </a>
+      </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div style="margin-top:1.5rem;">
+        <details>
+          <summary>Will I get banned? Is it safe?<span class="chevron" aria-hidden="true">+</span></summary>
+          <div class="faq-body">
+            Zero app modification — no judgment tampering, no memory editing. Only ADB touch inputs are sent, so game files are never touched.
+            <span class="hl">Zero bans reported</span> since the October 2025 launch. However, automation may still violate terms of service. Use at your own risk.
           </div>
         </details>
-
-        <details class="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <summary class="cursor-pointer list-none text-sm font-semibold text-slate-900">
-            Multi Live fails when there are duplicate song titles
-            <span class="float-right text-slate-400 group-open:text-slate-600" aria-hidden="true">+</span>
-          </summary>
-          <div class="mt-3 text-pretty text-sm text-slate-700">
-            Due to design limitations, songs with duplicate titles may fail to be selected correctly,
-            with <span class="font-semibold">about 50% failure rate</span>.
-            (e.g., Orange, Silhouette President)
+        <details>
+          <summary>Auto-play keeps failing<span class="chevron" aria-hidden="true">+</span></summary>
+          <div class="faq-body">
+            Emulator lag and micro-freezes can break timing. Check your resolution (16:9) and in-game settings (lightweight mode), and tune latency if available.
           </div>
         </details>
-
-        <details class="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <summary class="cursor-pointer list-none text-sm font-semibold text-slate-900">
-            Is it safe? Will I get banned?
-            <span class="float-right text-slate-400 group-open:text-slate-600" aria-hidden="true">+</span>
-          </summary>
-          <div class="mt-3 text-pretty text-sm text-slate-700">
-            Automation may violate the game terms of service.
-            No guarantees can be provided. Use at your own risk.
+        <details>
+          <summary>How far along is Project SEKAI support?<span class="chevron" aria-hidden="true">+</span></summary>
+          <div class="faq-body">
+            Event grinding and ranked match automation are live. Feature set is still expanding. Check Discord for the latest status.
           </div>
-          <p class="mt-3 text-pretty text-sm text-slate-700">
-            That said, since the release in <span class="font-semibold tabular-nums">October 2025</span>, no bans have been reported.
-          </p>
+        </details>
+        <details>
+          <summary>Multi Live fails with duplicate song titles<span class="chevron" aria-hidden="true">+</span></summary>
+          <div class="faq-body">
+            By design, duplicate song titles may cause selection failures with <span class="hl">roughly 50% chance</span> (e.g., Orange, Silhouette President).
+          </div>
         </details>
       </div>
     </section>
 
-    <section id="disclaimer" class="mt-14">
-      <h2 class="text-balance text-2xl font-semibold">Disclaimer</h2>
-      <div class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5">
-        <ul class="space-y-3 text-sm text-amber-900">
-          <li class="text-pretty">This project is <span class="font-semibold">unofficial</span> and not affiliated with any rights holders.</li>
-          <li class="text-pretty">Automation may violate the game terms of service. The author assumes no responsibility for any outcomes.</li>
-          <li class="text-pretty">Stability depends on your environment (resolution, UI language, performance, network, settings).</li>
+    <section id="disclaimer" class="disclaimer-section">
+      <div class="disclaimer-box">
+        <h2>Disclaimer</h2>
+        <ul class="disclaimer-list">
+          <li>This project is unofficial and not affiliated with any rights holders.</li>
+          <li>Automation may violate game terms of service. The author assumes no responsibility for any outcomes.</li>
+          <li>Stability depends on your environment (resolution, UI language, performance, network, settings).</li>
         </ul>
       </div>
     </section>
-
-    <footer class="mt-16 border-t border-slate-200 pt-8">
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p class="text-sm text-slate-500">© <span class="tabular-nums">2026</span> Dream Helper. All rights reserved.</p>
-        <div class="flex flex-wrap gap-3 text-sm">
-          <a class="text-slate-600 hover:text-slate-900" href="../">日本語</a>
-          <a class="text-slate-600 hover:text-slate-900" href="../zh/">中文</a>
-          <a class="text-slate-600 hover:text-slate-900" href="#get">Discord</a>
-        </div>
-      </div>
-    </footer>
   </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p>&copy; 2026 Dream Helper. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="../">日本語</a>
+        <a href="../zh/">中文</a>
+        <a href="https://discord.gg/kcp3nExD8s">Discord</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
