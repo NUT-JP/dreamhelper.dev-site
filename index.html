@@ -4,12 +4,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Dream Helper | 音ゲー自動化ツール - ガルパ & プロセカ対応</title>
-  <meta name="description" content="Dream Helper は、AIが実際にプレイする音ゲー自動化ツール。アプリ改造なし、BANリスク極小。寝ている間にイベント周回・ランクマッチを自動で。" />
+  <title>Dream Helper & Sekai Helper | 音ゲー自動化ツール - ガルパ・プロセカ対応</title>
+  <meta name="description" content="Dream Helper（ガルパ専用）と Sekai Helper（プロセカ専用）。AIが実際にプレイしてフルコンボ達成。root化・APK改造なし、BAN報告ゼロ。放置でイベントランキング上位を実現。" />
 
-  <meta property="og:title" content="Dream Helper" />
-  <meta property="og:description" content="AIが実際にプレイする音ゲー自動化ツール。アプリ改造なし、BANリスク極小。" />
+  <link rel="canonical" href="https://dreamhelper.dev/" />
+  <link rel="alternate" hreflang="ja" href="https://dreamhelper.dev/" />
+  <link rel="alternate" hreflang="en" href="https://dreamhelper.dev/en/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://dreamhelper.dev/zh/" />
+  <link rel="alternate" hreflang="x-default" href="https://dreamhelper.dev/" />
+
+  <meta property="og:title" content="Dream Helper & Sekai Helper | 音ゲー自動化ツール" />
+  <meta property="og:description" content="AIが実際にプレイしてフルコンボ達成。root化・APK改造なし、BAN報告ゼロ。放置でイベントランキング上位を実現。" />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dreamhelper.dev/" />
+  <meta property="og:image" content="https://dreamhelper.dev/og-image.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@dorihelp" />
+  <meta name="twitter:title" content="Dream Helper & Sekai Helper | 音ゲー自動化ツール" />
+  <meta name="twitter:description" content="AIが実際にプレイしてフルコンボ達成。root化・APK改造なし、BAN報告ゼロ。放置でイベントランキング上位を実現。" />
+  <meta name="twitter:image" content="https://dreamhelper.dev/og-image.png" />
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230ea5e9'/><path d='M22 42V22h20v20H22zm4-4h12V26H26v12z' fill='white'/></svg>" />
 
@@ -747,6 +761,62 @@
       }
     }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Dream Helper",
+    "description": "ガルパ（バンドリ！ ガールズバンドパーティ！）専用の音ゲー自動化ツール。AIが実際にプレイしてフルコンボを達成。",
+    "applicationCategory": "GameApplication",
+    "operatingSystem": "Windows",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "JPY"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "BANされない？安全ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "アプリの改造（判定改ざん等）は一切行いません。ADB 経由でタッチ入力を送るだけなので、ゲームのファイルやメモリには触れません。2025年10月のリリース以降、BAN報告はゼロです。ただし自動操作である以上、利用規約に抵触する可能性はあります。自己責任でご利用ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "うまく自動演奏できない / 失敗が増えた",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "エミュレータのフリーズや処理落ちで入力タイミングがずれると成功率が下がります。解像度（16:9）やゲーム内設定（軽量モード等）を見直し、必要に応じて遅延調整を行ってください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "プロセカはどこまで対応していますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "現在はイベント周回・ランクマッチの自動化に対応しています。ガルパほどの機能はまだありませんが、順次拡張中です。Discord で最新状況をご確認ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "マルチライブで同名曲があると失敗する",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "仕様上、同名曲が複数あるケースでは正しく選曲できず、約 1/2 の確率で失敗する場合があります（例：オレンジ、シルヴ・プレジデント）。"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">本文へスキップ</a>
@@ -786,24 +856,24 @@
       </h1>
 
       <p class="hero-sub">
-        AIとプログラムがゲームを<strong>実際にプレイ</strong>する自動化ツール。<br>
-        アプリの改造は一切なし。放置するだけでイベント周回・ランクマッチを自動実行。
+        AIがゲームを<strong>実際にプレイ</strong>する自動化ツール。<br>
+        root化・APK改造なし。放置するだけでイベント周回・ランクマッチを自動実行。
       </p>
 
       <div class="key-message">
-        <div class="key-message-title">Why Dream Helper?</div>
+        <div class="key-message-title">Why Choose Us?</div>
         <ul>
           <li>
             <span class="icon" aria-hidden="true">&#x2714;</span>
-            <span>判定改ざん等の<span class="highlight">アプリ改造は一切なし</span>。AIが画面を認識し、実際にタッチ操作を生成してプレイ。</span>
+            <span>AIが実際にプレイして<span class="highlight">フルコンボを達成</span>。報酬のスター（ガチャ石）を自動回収。</span>
           </li>
           <li>
             <span class="icon" aria-hidden="true">&#x2714;</span>
-            <span>アプリに手を加えないから<span class="highlight">BANリスクが極めて低い</span>。2025年10月の開始以降、BAN報告ゼロ。</span>
+            <span>root化・APK改造一切なし。実際のタッチ操作だから<span class="highlight">理論上検知不可能</span>。2025年10月の開始以降、BAN報告ゼロ。</span>
           </li>
           <li>
             <span class="icon" aria-hidden="true">&#x2714;</span>
-            <span><span class="highlight">完全放置でOK</span>。寝ている間にイベント周回、ランクマッチ、スター回収を自動で。</span>
+            <span>マルチ・イベント限定含む<span class="highlight">全モード自動周回</span>。放置でイベントランキング上位を達成。</span>
           </li>
         </ul>
       </div>
@@ -819,19 +889,19 @@
 
     <!-- Supported Games -->
     <section id="games" class="games-section">
-      <p class="section-label">Supported Games</p>
-      <h2 class="section-title">対応タイトル</h2>
-      <p class="section-desc">2つの人気音楽ゲームに対応。エミュレータ上で自動プレイを実行します。</p>
+      <p class="section-label">Our Products</p>
+      <h2 class="section-title">製品ラインナップ</h2>
+      <p class="section-desc">ゲームごとに最適化された専用ツール。それぞれ別製品・別ライセンスです。どちらも同じ Discord で入手できます。</p>
 
       <div class="games-grid">
         <div class="game-card garupa">
           <span class="game-tag cyan">BanG Dream!</span>
-          <h3>ガルパ（バンドリ！ ガールズバンドパーティ！）</h3>
-          <p>フリーライブ / マルチライブ / チャレンジライブの自動周回に対応。</p>
+          <h3>Dream Helper</h3>
+          <p>ガルパ（バンドリ！ ガールズバンドパーティ！）専用の自動化ツール。フリーライブ / マルチライブ / チャレンジライブの全モード対応。</p>
           <ul class="game-features">
             <li>自動選曲・演奏・結果処理の全自動ループ</li>
             <li>ライブブースト自動回復（スター/ドリンク）</li>
-            <li>未フルコンボ曲のスター回収</li>
+            <li>AIフルコンボでスター（ガチャ石）を自動回収</li>
             <li>キャラ育成・エピソード自動回収</li>
           </ul>
         </div>
@@ -839,8 +909,8 @@
         <div class="game-card prosekai">
           <span class="game-tag pink">Project SEKAI</span>
           <span class="game-tag new-badge">NEW</span>
-          <h3>プロジェクトセカイ</h3>
-          <p>新規対応。自動プレイでイベントポイント・ランクマッチを自動化。</p>
+          <h3>Sekai Helper</h3>
+          <p>プロジェクトセカイ専用の自動化ツール（別製品・別ライセンス）。イベント周回・ランクマッチを自動化。</p>
           <ul class="game-features">
             <li>イベント周回の自動化</li>
             <li>ランクマッチの自動参加・実行</li>
@@ -1059,6 +1129,7 @@
         <a href="./en/">English</a>
         <a href="./zh/">中文</a>
         <a href="https://discord.gg/kcp3nExD8s">Discord</a>
+        <a href="https://x.com/dorihelp" target="_blank" rel="noopener noreferrer">X (@dorihelp)</a>
       </div>
     </div>
   </footer>
