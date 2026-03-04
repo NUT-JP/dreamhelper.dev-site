@@ -13,8 +13,8 @@
     gtag('config', 'G-4JYH3EH1MT');
   </script>
 
-  <title>Dream Helper — ガルパ自動演奏・フルコンボBOT | プロセカ自動周回 | BAN報告ゼロ</title>
-  <meta name="description" content="Dream Helper はガルパ（バンドリ）専用の自動演奏BOT。AIフルコンボでガチャ石自動回収、イベント放置周回でランキング上位。root化・APK改造なし、BAN報告ゼロ。プロセカ対応の Sekai Helper も提供。" />
+  <title>Dream Helper — ガルパ・プロセカ・ユメステ自動演奏BOT | 全曲AP | BAN報告ゼロ</title>
+  <meta name="description" content="Dream Helper はガルパ・プロセカ・ユメステ対応の自動演奏BOT。全曲100% All Perfectで160,000個のスター自動回収。Pro版は万全なBAN対策で理論上検出不可能。root化・APK改造なし。" />
 
   <link rel="canonical" href="https://dreamhelper.dev/" />
   <link rel="alternate" hreflang="ja" href="https://dreamhelper.dev/" />
@@ -23,16 +23,16 @@
   <link rel="alternate" hreflang="ru" href="https://dreamhelper.dev/ru/" />
   <link rel="alternate" hreflang="x-default" href="https://dreamhelper.dev/" />
 
-  <meta property="og:title" content="Dream Helper — ガルパ自動演奏BOT | プロセカ対応 | BAN報告ゼロ" />
-  <meta property="og:description" content="AIフルコンボで自動演奏。ガチャ石自動回収、イベント放置周回。root化・APK改造なし、BAN報告ゼロ。" />
+  <meta property="og:title" content="Dream Helper — ガルパ・プロセカ・ユメステ自動演奏BOT | 全曲AP" />
+  <meta property="og:description" content="全曲100% All Perfect。160,000スター自動回収。Pro版は理論上検出不可能。root化・APK改造なし、BAN報告ゼロ。" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://dreamhelper.dev/" />
   <meta property="og:image" content="https://dreamhelper.dev/og-image.png" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@dorihelp" />
-  <meta name="twitter:title" content="Dream Helper — ガルパ自動演奏BOT | プロセカ対応 | BAN報告ゼロ" />
-  <meta name="twitter:description" content="AIフルコンボで自動演奏。ガチャ石自動回収、イベント放置周回。root化・APK改造なし、BAN報告ゼロ。" />
+  <meta name="twitter:title" content="Dream Helper — ガルパ・プロセカ・ユメステ自動演奏BOT | 全曲AP" />
+  <meta name="twitter:description" content="全曲100% All Perfect。160,000スター自動回収。Pro版は理論上検出不可能。root化・APK改造なし、BAN報告ゼロ。" />
   <meta name="twitter:image" content="https://dreamhelper.dev/og-image.png" />
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230ea5e9'/><path d='M22 42V22h20v20H22zm4-4h12V26H26v12z' fill='white'/></svg>" />
@@ -484,6 +484,14 @@
     .garupa .game-features li::before { background: var(--accent); }
     .prosekai .game-features li::before { background: var(--pink); }
 
+    .game-card.yumesute::after { background: #a855f7; }
+    .game-tag.purple { background: rgba(168,85,247,0.15); color: #a855f7; }
+    .game-tag.pro-badge {
+      background: linear-gradient(135deg, rgba(251,191,36,0.25), rgba(251,191,36,0.1));
+      color: var(--amber); margin-left: 0.5rem;
+    }
+    .yumesute .game-features li::before { background: #a855f7; }
+
     /* Showcase */
     .showcase-section { padding: 4rem 0 3rem; }
 
@@ -777,12 +785,12 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Dream Helper",
-    "description": "ガルパ（バンドリ）専用の自動演奏BOT。AIがフルコンボを達成しガチャ石を自動回収。イベント放置周回でランキング上位。root化・APK改造なし、BAN報告ゼロ。",
+    "description": "ガルパ・プロセカ・ユメステ対応の自動演奏BOT。全曲100% All Perfectで160,000スター自動回収。Pro版は理論上検出不可能。root化・APK改造なし、BAN報告ゼロ。",
     "applicationCategory": "GameApplication",
     "operatingSystem": "Windows",
     "url": "https://dreamhelper.dev/",
     "datePublished": "2025-10-01",
-    "dateModified": "2026-03-03",
+    "dateModified": "2026-03-04",
     "inLanguage": "ja",
     "offers": {
       "@type": "Offer",
@@ -869,7 +877,7 @@
     <section class="hero">
       <div class="hero-badge">
         <span class="dot" aria-hidden="true"></span>
-        プロセカ 新規対応
+        ユメステ＆Pro版 新登場
       </div>
 
       <h1>
@@ -886,7 +894,7 @@
         <ul>
           <li>
             <span class="icon" aria-hidden="true">&#x2714;</span>
-            <span>AIが実際にプレイして<span class="highlight">フルコンボを達成</span>。報酬のスター（ガチャ石）を自動回収。</span>
+            <span>AIが実際にプレイして<span class="highlight">フルコンボを達成</span>。楽曲クリア報酬だけで<span class="highlight">160,000個のスター</span>（ガチャ石）を自動回収。</span>
           </li>
           <li>
             <span class="icon" aria-hidden="true">&#x2714;</span>
@@ -916,7 +924,7 @@
     <section id="games" class="games-section">
       <p class="section-label">対応ゲーム</p>
       <h2 class="section-title">自動演奏BOT ラインナップ</h2>
-      <p class="section-desc">ゲームごとに最適化された専用ツール。それぞれ別製品・別ライセンスです。どちらも同じ Discord で入手できます。</p>
+      <p class="section-desc">ゲームごとに最適化された専用ツール。それぞれ別製品・別ライセンスです。全て同じ Discord で入手できます。</p>
 
       <div class="games-grid">
         <div class="game-card garupa">
@@ -926,7 +934,7 @@
           <ul class="game-features">
             <li>自動選曲・演奏・結果処理の全自動ループ</li>
             <li>ライブブースト自動回復（スター/ドリンク）</li>
-            <li>AIフルコンボでスター（ガチャ石）を自動回収</li>
+            <li>AIフルコンボで160,000個のスター（ガチャ石）を自動回収</li>
             <li>広告スキップ＆無料ガチャ自動回収</li>
             <li>キャラ育成・エピソード自動回収</li>
           </ul>
@@ -942,6 +950,30 @@
             <li>ランクマッチの自動参加・実行</li>
             <li>広告スキップ＆無料ガチャ自動回収</li>
             <li>エネルギー管理の自動化</li>
+          </ul>
+        </div>
+
+        <div class="game-card prosekai">
+          <span class="game-tag pink">Project SEKAI</span>
+          <span class="game-tag pro-badge">PRO</span>
+          <h3>Sekai Helper Pro — プロセカ自動演奏BOT</h3>
+          <p>プロセカ上位版BOT。全曲100% All Perfectで報酬効率を最大化。放置周回でリソースを大量回収。理論上検出不可能。</p>
+          <ul class="game-features">
+            <li>全曲100% All Perfect — 報酬効率最大</li>
+            <li>イベント・ランクマッチの自動周回</li>
+            <li>万全なBAN対策 — 理論上検出不可能</li>
+          </ul>
+        </div>
+
+        <div class="game-card yumesute">
+          <span class="game-tag purple">ユメステ</span>
+          <span class="game-tag new-badge">NEW</span>
+          <h3>World Helper — ユメステ自動演奏BOT</h3>
+          <p>ワールドダイスター 夢のステラリウム専用BOT。全曲100% All Perfectで自動プレイ。BAN対策済みで理論上検出不可能。</p>
+          <ul class="game-features">
+            <li>全曲100% All Perfect — 自動プレイ</li>
+            <li>万全なBAN対策 — 理論上検出不可能</li>
+            <li>機能拡張予定</li>
           </ul>
         </div>
       </div>
